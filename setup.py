@@ -8,7 +8,8 @@
 #
 # Author: John Hampton <pacopablo@pacopablo.com>
 
-from distutils.core import setup
+from setuptools import setup, find_packages
+#from distutils.core import setup
 
 setup(
     name = 'anagogic.youtrack.api',
@@ -23,4 +24,3 @@ setup(
             'anagogic.youtrack.api',
     ],
 )
-
