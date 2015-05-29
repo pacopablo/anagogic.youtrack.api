@@ -52,7 +52,9 @@ Contents:
    :maxdepth: 2
 
    connecting
+   development
    api_reference
+
 ..   users
 ..   projects
 ..   issues

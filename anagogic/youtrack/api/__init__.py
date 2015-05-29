@@ -8,4 +8,4 @@
 #
 # Author: John Hampton <pacopablo@pacopablo.com>
 
-from .connection import Connection
+from .connection import connect

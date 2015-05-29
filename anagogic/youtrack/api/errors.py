@@ -16,8 +16,14 @@ __all__ = [
 class YTLoginError(Exception):
     """Raise when an error is encountered during login
 
-    ``status_code``: the HTTP status code returned by YouTrack
-    ``text``: any data returned in the body of the request
+    .. attribute:: status_code
+
+       The HTTP status code returned by the YouTrack server (int)
+
+    .. attribute:: text
+
+       A string containing any data returned in the body of the request
+
     """
 
     def __init__(self, status_code, text=''):

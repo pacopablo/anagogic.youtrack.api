@@ -18,7 +18,7 @@
     >>> password = 'yeah, you wish'
     >>> cnx = connect(url=url, username=username, password=password)
     >>> cnx
-    Connection('http://pacopablo.myjetbrains.com', 'testuser', '******')
+    Connection('https://pacopablo.myjetbrains.com/youtrack', 'testuser', '******')
 
 """
 # 3rd Party Imports
@@ -30,6 +30,23 @@ from .errors import YTLoginError
 __all__ = [
     'Connection',
 ]
+
+def connect(url='', username='', password=None):
+    """
+    :param url: Full URL to the YouTrack instance.  This should be the base url
+                of the instance.
+
+    :type url: str
+    :param username: Name of the user being user to log in
+    :type username: str
+    :param password: Password of specified user
+    :type password: str
+    :return: a Connection() object
+    :rtype: :class:`anagogic.youtrack.api.connection.Connection`
+    :raises anagogic.youtrack.api.errors.YTLoginEError: On failed login
+    """
+
+    return Connection(url, username, password)
 
 
 class Connection(object):
@@ -63,6 +80,8 @@ class Connection(object):
         :param passwd: Password for the specified user
         :type passwd: str
         """
+        self.username = user
+        self.password = passwd
 
     def login(self, user, passwd):
         """ Logs into the YouTrack instance
@@ -70,12 +89,11 @@ class Connection(object):
         The method is called automatically on object instantiation and should
         not need to be called directly.
 
-        If login is unsuccessful, a :exc:`YTLoginError` is raised.
-
         :param user: Name of the user being used to log in
         :type user: str
         :param passwd: Password for the specified user
         :type passwd: str
+        :raises anagogic.youtrack.api.errors.YTLoginError: if login fails
         """
         url = self.base_url + '/rest/user/login'
         r = requests.post(url, params={'login' : user, 'password': passwd})
@@ -83,3 +101,12 @@ class Connection(object):
             self.cookies = r.cookies
         else:
             raise YTLoginError(r.status_code, r.text)
+
+    def __str__(self):
+        return "Connection(url='{}', user='{}', passwd='******')".format(
+                            self.base_url, self.username)
+
+    def __repr__(self):
+        return "Connection(url='{}', user='{}', passwd='******')".format(
+                            self.base_url, self.username)
+

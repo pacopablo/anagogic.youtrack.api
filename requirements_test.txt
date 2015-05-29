@@ -1,0 +1,4 @@
+-r requirements.txt
+Responses
+Mock
+pytest

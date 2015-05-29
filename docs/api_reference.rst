@@ -13,4 +13,8 @@ API Reference
    :members:
    :private-members:
 
+
+
 .. automodule:: anagogic.youtrack.api.errors
+
+.. autoclass:: anagogic.youtrack.api.errors.YTLoginError
