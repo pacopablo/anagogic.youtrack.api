@@ -8,7 +8,9 @@
 #
 # Author: John Hampton <pacopablo@pacopablo.com>
 import responses
+import pytest
 from anagogic.youtrack.api import connect
+from anagogic.youtrack.api.errors import YTLoginError
 
 YOUTRACK_BASE_URL = 'http://localhost:8081'
 LOGIN_PATH = '/rest/user/login'
@@ -32,6 +34,16 @@ def test_connect_success():
 @responses.activate
 def test_connect_failure():
     """ Test failed connection """
+
+    responses.add(responses.POST, YOUTRACK_BASE_URL + LOGIN_PATH,
+                 body='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+                      '<error>Incorrect login or password.</error>',
+                 status=403)
+    with pytest.raises(YTLoginError):
+        cnx = connect(YOUTRACK_BASE_URL, username='testuser',
+                      password='this is not the correct password')
+
+
 
 """
 HTTP/1.1 200 OK
